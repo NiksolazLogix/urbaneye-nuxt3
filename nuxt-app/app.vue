@@ -1,5 +1,7 @@
 <template>
   <div>
-    <Urbaeye />
+    <NuxtLayout>
+      <NuxtPage/>
+    </NuxtLayout>
   </div>
 </template>
