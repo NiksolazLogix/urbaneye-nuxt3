@@ -4,14 +4,17 @@ Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
 
 ## Setup
 
+```node 16.15.0```
+```npm 8.11.0```
+
 Make sure to install the dependencies:
 
 ```bash
 # yarn
-yarn install
+yarn install ( per ora sconsigliato )
 
 # npm
-npm install
+npm install ( consigliato )
 
 # pnpm
 pnpm install --shamefully-hoist
