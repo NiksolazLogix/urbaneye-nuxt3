@@ -140,12 +140,12 @@ span {
   font-weight: 700;
 }
 .redText {
-  color: red;
+  color: rgb(196, 96, 96);
 }
 .yellowText {
-  color: yellow;
+  color: rgb(224, 203, 46);
 }
 .greenText {
-  color: green;
+  color: rgb(154, 247, 154);
 }
 </style>
