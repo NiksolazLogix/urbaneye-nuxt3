@@ -28,7 +28,7 @@ const obj_1 = {
   name: 'Bari',
   country: 'Italia',
   description: 'Lorem ipsum dolor sit amet euismod rhoncus elementum hendrerit massa.',
-  rating: 41,
+  rating: 86,
   username: 'Coco',
   image: 'https://fakeimg.pl/25x25/?text=CC',
   updated: getDate()
@@ -37,7 +37,7 @@ const obj_2 = {
   name: 'Londra',
   country: 'Inghilterra',
   description: 'Lorem ipsum dolor sit amet euismod rhoncus elementum hendrerit massa.',
-  rating: 89,
+  rating: 39,
   username: 'Coco',
   image: 'https://fakeimg.pl/25x25/?text=CC',
   updated: getDate()
@@ -63,15 +63,21 @@ const p3 = createPaese(obj_3)
 
 const cards = [p1,p2,p3]
 
+enum classText {
+  RED = 'redText',
+  YEL = 'yellowText',
+  GRE = 'greenText',
+}
+
 const ratingClass = (r: number | string):string => {
   if(r <= 50) {
-    return 'redText'
+    return  classText.RED
   }
   if(r > 50 && r < 80) {
-    return 'yellowText'
+    return classText.YEL
   }
   if(r >= 80) {
-    return 'greenText'
+    return classText.GRE
   }
 }
 </script>
@@ -84,7 +90,7 @@ const ratingClass = (r: number | string):string => {
           <div>
             <span class="t-3">{{card.name}}</span>
           </div>
-          <div><span :class="ratingClass(card.rating)" class="t-3">{{card.rating}}</span>/ 100</div>
+          <div><span :class="ratingClass(card.rating)" class="t-3">{{card.rating}}</span> / 100</div>
         </div>
         <div class="card-middle">
           <p><span class="t-2">{{card.country}}</span></p>
@@ -103,6 +109,7 @@ const ratingClass = (r: number | string):string => {
   width: 300px;
   background-color: rgb(98, 95, 93);
   border: 1px solid black;
+  border-radius: 10px;
   padding: 10px;
   margin: 5px;
 }
