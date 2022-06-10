@@ -1,85 +1,53 @@
-<script lang="ts" setup>
-interface City {
-  name: string;
-  country: string;
-  description: string;
-  rating: number | string;
-  username: string;
-  image: string;
-  updated: string;
-}
+<script lang="ts">
+import { reactive } from "vue";
 
-class Cittadina<City>{
-  info:any;
-  constructor(info:City) {
-    let self:any = this
-    self.info = info
+export default {
+  async setup() {
+
+    const {log} = console
+
+    const formatDate = (fd): string => {
+      const d = new Date(fd)
+      let dd = d.getDate() < 10 ? '0' + String(d.getDate()) : String(d.getDate())
+      let mm = (d.getMonth() + 1) < 10 ? '0' + String(d.getMonth() + 1) : String(d.getMonth() + 1)
+      let yy = String(d.getFullYear()) 
+      return dd + '-' + mm + '-' + yy + ' ' + d.getHours() + ':' + d.getMinutes()
+    }
+
+    enum classText {
+      RED = 'redText',
+      YEL = 'yellowText',
+      GRE = 'greenText',
+    }
+
+    const ratingClass = (r: number | string):string => {
+      if(r <= 50) {
+        return  classText.RED
+      }
+      if(r > 50 && r < 80) {
+        return classText.YEL
+      }
+      if(r >= 80) {
+        return classText.GRE
+      }
+    }
+    const url:string = "https://agile-meadow-52439.herokuapp.com/api/cards/?api-key=foo"
+
+    let cards:object[] = reactive([])
+
+    await fetch(url)
+    .then((res:any) => res.json())
+    .then((data:object[]) => {
+      cards = data
+    })
+    log(cards)
+    return {
+      cards,
+      ratingClass,
+      formatDate
+    }
   }
-}
-
-const getDate = (): string => {
-  const d = new Date()
-  let dd = d.getDate() < 10 ? '0' + String(d.getDate()) : String(d.getDate())
-  let mm = (d.getMonth() + 1) < 10 ? '0' + String(d.getMonth()) : String(d.getMonth())
-  let yy = String(d.getFullYear()) 
-  return dd + '-' + mm + '-' + yy
-}
-const obj_1 = {
-  name: 'Bari',
-  country: 'Italia',
-  description: 'Lorem ipsum dolor sit amet euismod rhoncus elementum hendrerit massa.',
-  rating: 86,
-  username: 'Coco',
-  image: 'https://fakeimg.pl/25x25/?text=CC',
-  updated: getDate()
-}
-const obj_2 = {
-  name: 'Londra',
-  country: 'Inghilterra',
-  description: 'Lorem ipsum dolor sit amet euismod rhoncus elementum hendrerit massa.',
-  rating: 39,
-  username: 'Coco',
-  image: 'https://fakeimg.pl/25x25/?text=CC',
-  updated: getDate()
-}
-const obj_3= {
-  name: 'Oslo',
-  country: 'Norvegia',
-  description: 'Lorem ipsum dolor sit amet euismod rhoncus elementum hendrerit massa.',
-  rating: 64,
-  username: 'Coco',
-  image: 'https://fakeimg.pl/25x25/?text=CC',
-  updated: getDate()
-}
-const createPaese = (obj:object) => {
-  const paese = new Cittadina(obj)
-  return paese.info
-}
-const p1 = createPaese(obj_1)
-
-const p2 = createPaese(obj_2)
-
-const p3 = createPaese(obj_3)
-
-const cards = [p1,p2,p3]
-
-enum classText {
-  RED = 'redText',
-  YEL = 'yellowText',
-  GRE = 'greenText',
-}
-
-const ratingClass = (r: number | string):string => {
-  if(r <= 50) {
-    return  classText.RED
-  }
-  if(r > 50 && r < 80) {
-    return classText.YEL
-  }
-  if(r >= 80) {
-    return classText.GRE
-  }
-}
+};
 </script>
 
 <template>
@@ -88,7 +56,7 @@ const ratingClass = (r: number | string):string => {
       <div class="card">
         <div class="card-top">
           <div>
-            <span class="t-3">{{card.name}}</span>
+            <span class="t-3">{{card.city}}</span>
           </div>
           <div><span :class="ratingClass(card.rating)" class="t-3">{{card.rating}}</span> / 100</div>
         </div>
@@ -97,8 +65,8 @@ const ratingClass = (r: number | string):string => {
           <p><span class="t-2">{{card.description}}</span></p>
         </div>
         <div  class="card-bottom">
-          <img :src="card.image" class="card-image">
-          <span class="t-2 mx-10">{{card.username}}</span> | <span class="t-2 mx-10">{{card.updated}}</span></div>
+          <img :src="card.user.logo" class="card-image" width="25" height="25">
+          <span class="t-2 mx-10">{{card.user.username}}</span> | <span class="t-2 mx-10">{{formatDate(card.user.updated)}}</span></div>
       </div>
     </div>
   </div>
@@ -156,3 +124,7 @@ span {
   color: rgb(154, 247, 154);
 }
 </style>
+
+function ref(arg0: undefined[]): any {
+  throw new Error('Function not implemented.');
+}
