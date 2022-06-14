@@ -5,7 +5,6 @@
     </NuxtLayout>
   </div>
 </template>
-
 <style>
 body {
   color: rgb(255, 255, 255);

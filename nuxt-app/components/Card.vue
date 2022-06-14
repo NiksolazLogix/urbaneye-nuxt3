@@ -40,7 +40,7 @@ export default {
     .then((data:object[]) => {
       cards = data
     })
-    log(cards)
+    // log(cards)
     return {
       cards,
       ratingClass,
